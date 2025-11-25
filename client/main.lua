@@ -136,6 +136,28 @@ end
 -- NUI Menu Option Selected Handler
 RegisterNetEvent('qc-devtools:nui:optionSelected')
 AddEventHandler('qc-devtools:nui:optionSelected', function(optionId, optionData, menuId)
+    print('[QC-DevTools] Menu selection - MenuID:', menuId, 'OptionID:', optionId)
+    
+    -- Let admin menu handlers process their own events (don't block them)
+    local adminMenus = {
+        'qc_admin_main',
+        'admin_self_menu',
+        'admin_coords_menu',
+        'admin_vehicle_menu',
+        'admin_players_menu',
+        'admin_player_options',
+        'admin_server_menu',
+        'admin_troll_menu',
+        'admin_troll_options'
+    }
+    
+    for _, adminMenu in ipairs(adminMenus) do
+        if menuId == adminMenu then
+            -- This is an admin menu, let the admin handlers process it
+            return
+        end
+    end
+    
     if menuId == 'main' then
         -- Handle search result selections (items from within categories)
         if string.find(optionId, '_') then
@@ -186,8 +208,12 @@ AddEventHandler('qc-devtools:nui:optionSelected', function(optionId, optionData,
                 TriggerEvent('qc-devtools:client:openAudio')
             elseif optionId == 'ipls' then
                 TriggerEvent('qc-devtools:client:openIPLs')
+            elseif optionId == 'ptfx' then
+                TriggerEvent('qc-devtools:client:openPTFX')
             elseif optionId == 'entityinfo' then
                 TriggerEvent('qc-devtools:client:openEntityInfo')
+            elseif optionId == 'adminmenu' then
+                TriggerEvent('qc-devtools:client:openadminmenu')
             else
                 -- Coming soon notification for other modules
                 TriggerEvent('qc-devtools:client:showNotification', {
@@ -198,8 +224,8 @@ AddEventHandler('qc-devtools:nui:optionSelected', function(optionId, optionData,
             end
         end
     else
-        -- Handle other menu selections
-        TriggerEvent('qc-devtools:nui:menuSelection', optionId, optionData, menuId)
+        -- Other menu IDs are handled by their respective modules
+        -- No action needed here
     end
 end)
 
@@ -264,6 +290,15 @@ end)
 -- Commands
 RegisterCommand(Config.Commands.mainMenu, function()
     OpenMainMenu()
+end, false)
+
+-- Admin Menu Command
+RegisterCommand(Config.Commands.adminMenu, function()
+    if Config.AdminMenu.enabled then
+        TriggerEvent('qc-devtools:client:openadminmenu')
+    else
+        print('^3[QC-DevTools]^0 Admin menu is disabled in config!')
+    end
 end, false)
 
 -- Alternative direct access to ped decals

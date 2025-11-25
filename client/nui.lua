@@ -135,7 +135,8 @@ end
 
 -- Global functions for easy access
 function ShowDevToolsMenu(menuData)
-    print('[QC-DevTools] ShowDevToolsMenu called with:', json.encode(menuData))
+    -- Don't try to encode menuData as it may contain functions
+    print('[QC-DevTools] ShowDevToolsMenu called')
     print('[QC-DevTools] Current nuiOpened state:', nuiOpened)
     
     if nuiOpened then
