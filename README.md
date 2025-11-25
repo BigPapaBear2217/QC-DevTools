@@ -22,21 +22,46 @@ QC-DevTools is a comprehensive, modular development framework for RedM featuring
 
 ## 📦 Included Modules
 
-- 🎨 **Ped Decals**
-- 💥 **Explosions**
-- 🔊 **Audio System**
-- 🏢 **IPL Management**
-- 🎭 **Animation Post FX**
-- 🌅 **Timecycle Modifiers**
-- 📡 **Entity Information**
+### 🔧 **Development Tools**
+- 🎨 **Ped Decals** - Apply decals, scars, and damage effects
+- 💥 **Explosions** - Test all explosion types safely
+- 🔊 **Audio System** - Test sounds, music, and speech
+- 🏢 **IPL Management** - Enable/disable interior placements
+- 🎭 **Animation Post FX** - Visual effects and filters
+- 🌅 **Timecycle Modifiers** - Environmental visual effects
+- ✨ **PTFX Effects** - Particle effects testing
+- 📡 **Entity Information** - Advanced entity scanner
+
+### 🛡️ **Admin System** (NEW in v1.1.0)
+- 👤 **Self Options** - God mode, invisibility, noclip, revive, teleport
+- 👥 **Player Management** - View info, teleport, spectate, freeze, money, kick/ban
+- 🐴 **Horse Spawner** - 5 premium admin horses with max stats
+- 🌍 **Server Control** - Weather, time, announcements
+- 😈 **Troll Menu** - Fun options (animal attacks, fire, drunk, explosions)
 
 ## 🛠️ Installation
 
+### **Quick Start**
 1. **Download** the latest release
 2. **Extract** to your RedM resources folder
-3. **Add** `ensure QC-DevTools` to your server.cfg
-4. **Configure** modules in `shared/config.lua`
-5. **Start** your server and enjoy!
+3. **Add dependencies** to server.cfg:
+   ```cfg
+   ensure oxmysql
+   ensure ox_lib
+   ensure rsg-core
+   ensure QC-DevTools
+   ```
+4. **Configure** admin jobs in `shared/config.lua`:
+   ```lua
+   Config.AdminMenu.adminJobs = { 'admin', 'god' }
+   ```
+5. **Import database** (for ban system):
+   ```sql
+   -- See INSTALLATION.md for SQL
+   ```
+6. **Restart** server and enjoy!
+
+📖 **Detailed Instructions:** See [INSTALLATION.md](INSTALLATION.md)
 
 ### Entity Scanner
 1. Navigate to "Entity Information"
@@ -47,6 +72,33 @@ QC-DevTools is a comprehensive, modular development framework for RedM featuring
 ## 🖼️ Preview
 
 <img width="534" height="857" alt="image" src="https://github.com/user-attachments/assets/c2f26dc1-f9b4-4824-a190-f1829a938388" />
+
+## 🎮 Usage
+
+### **Commands**
+```bash
+/devtools        # Open main development tools menu
+/admin           # Open admin menu directly
+/dev_decals      # Quick access to ped decals
+```
+
+### **For Administrators**
+1. Open admin menu with `/admin` or `/devtools`
+2. Select from available options:
+   - **Self Options** - Personal admin powers
+   - **Player Management** - Control other players
+   - **Server Options** - Weather, time, announcements
+   - **Troll Menu** - Fun interactions
+   - **Horse Spawner** - Get admin horses
+
+📖 **Full Admin Guide:** See [README_ADMIN.md](README_ADMIN.md)
+
+### **For Developers**
+1. Open with `/devtools`
+2. Use global search (type to search all features)
+3. Navigate through categories
+4. Test features with clipboard auto-copy
+5. Use entity scanner for coordinates and hashes
 
 ## 🔧 Development
 
@@ -97,21 +149,37 @@ The NUI interface supports theming and customization:
 
 **Menu not opening:**
 - Check F8 console for errors
-- Verify resource is started
+- Verify resource is started: `ensure QC-DevTools`
+- Check dependencies are loaded
+
+**Admin menu not showing:**
+- Verify your job matches `Config.AdminMenu.adminJobs`
+- Check you're using RSG Core framework
+- Restart resource: `restart QC-DevTools`
 
 **NUI not loading:**
 - Ensure `html/dist/` folder exists
 - Run `npm install && npm run build` in html directory
 
-**Search not working:**
-- Verify module data is properly loaded
-- Restart resource after config changes
+**Player management not working:**
+- Check RSG Core is loaded first
+- Verify oxmysql connection
+- Review server console for errors
+
+📖 **Full Troubleshooting:** See [INSTALLATION.md](INSTALLATION.md)
 
 ## 📋 Requirements
 
-- **RedM** server
-- **Modern browser** for NUI (Chrome/Edge recommended)
-- **Node.js** (for development/building only)
+### **Essential**
+- **RedM** server (latest build)
+- **RSG Core** framework
+- **ox_lib** - UI library
+- **oxmysql** - Database operations
+
+### **Optional**
+- **rsg-medic** - For revive functionality
+- **rsg-log** - For admin action logging
+- **Node.js** - For UI development only
 
 ## 🤝 Contributing
 
